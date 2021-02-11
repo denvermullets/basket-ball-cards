@@ -4,16 +4,20 @@
   "description": "basketball card game",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon --exec babel-node server.js"
   },
   "author": "denvermullets",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "pg": "^8.5.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/node": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.7"
   }
