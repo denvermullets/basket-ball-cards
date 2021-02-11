@@ -5,7 +5,7 @@ function getRoutes() {
   // create a router for all the routes of our app
   const router = express.Router()
 
-  router.use("/stats", getStatsRoutes())
+  router.use("/api", getStatsRoutes())
   // any additional routes would go here
   return router
 }

@@ -1,10 +1,10 @@
 {
-  "name": "basket-ball-cards",
+  "name": "basketball.cards",
   "version": "0.0.1",
   "description": "basketball card game",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon --exec babel-node server.js"
+    "bball": "nodemon --exec babel-node server.js"
   },
   "author": "denvermullets",
   "license": "ISC",
