@@ -1,19 +1,19 @@
-import express from "express"
-import pool from "../db"
+import express from 'express'
+import pool from '../db'
 
 function getStatsRoutes() {
   const router = express.Router()
-  router.get("/stats", getStats)
+  router.get('/stats', getStats)
 
-  router.post("/stats", postStats)
+  router.post('/stats', postStats)
   return router
 }
 
 async function getStats(req, res) {
   try {
-    const allStats = await pool.query("SELECT * FROM stats")
+    const allStats = await pool.query('SELECT * FROM stats')
     res.json(allStats.rows)
-    console.log("SELECT * FROM stats")
+    console.log('SELECT * FROM stats')
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -23,7 +23,7 @@ async function postStats(req, res) {
   try {
     const { name, points } = req.body
     const newStat = await pool.query(
-      "INSERT INTO stats (name, points) VALUES ($1, $2) RETURNING *",
+      'INSERT INTO stats (name, points) VALUES ($1, $2) RETURNING *',
       [name, points]
     )
     console.log(
