@@ -41,6 +41,7 @@ CREATE TABLE teams(
   score INTEGER
 );
 
+-- Join table for 'teams' and 'players'
 CREATE TABLE team_players(
   team_player_id SERIAL PRIMARY KEY,
   player_id INTEGER,

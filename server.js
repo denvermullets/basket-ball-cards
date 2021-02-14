@@ -1,16 +1,15 @@
-// require("dotenv").config()
-import "dotenv/config"
+import 'dotenv/config'
 
-const express = require("express")
-const cors = require("cors")
+const express = require('express')
+const cors = require('cors')
 const app = express()
 
-import { getRoutes } from "./routes/index"
+import { getRoutes } from './routes/index'
 
 // app.use(cors()) // should need
 app.use(express.json())
-app.use("/", getRoutes())
+app.use('/api', getRoutes())
 
 app.listen(5000, () => {
-  console.log("Server Started")
+  console.log('Server Started on port:5000')
 })
