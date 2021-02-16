@@ -15,5 +15,11 @@ Just a simple basketball card game.
 
 - Current routes are:
   - /api/v1
-    - /players (GET, POST, DELETE)
-    - /players/:id
+    - /players
+      - (GET, POST, DELETE)
+      - /players/:id
+    - /teams
+      - (GET, POST)
+      - /teams/:id
+    - /team_players
+      - (GET, POST)
