@@ -1,12 +1,22 @@
 import express from 'express'
 import pool from '../db'
+import AWS from 'aws-sdk'
+
+const credentials = {
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY_ID,
+}
+
+AWS.config.update({ credentials: credentials, region: 'us-east-1' })
+const s3 = new AWS.S3({})
 
 function getPlayersRoutes() {
   const router = express.Router()
 
   router.get('/', getPlayers)
   router.post('/', postPlayers)
-  router.get('/:id', getPlayer)
+  // router.get('/:id', getPlayer)
+  router.get('/:name', getPlayer)
   router.delete('/:id', deletePlayer)
 
   return router
@@ -23,15 +33,18 @@ async function getPlayers(req, res) {
 }
 
 async function getPlayer(req, res) {
-  const { id } = req.params
+  const { name } = req.params
   try {
-    const player = await pool.query(
-      'SELECT * FROM players WHERE player_id = $1',
-      [id]
-    )
-    console.log(`SELECT * FROM players WHERE player_id = $1, [${id}]`)
-    res.json(player.rows[0])
+    let url = s3.getSignedUrl('getObject', {
+      Bucket: 'basketball-cards',
+      Key: name,
+      Expires: 3600,
+    })
+
+    console.log('image found: ', url)
+    res.json(url)
   } catch (err) {
+    console.log({ message: err.message })
     res.status(500).json({ message: err.message })
   }
 }
