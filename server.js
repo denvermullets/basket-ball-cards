@@ -6,8 +6,8 @@ const app = express()
 
 import { getRoutes } from './routes/index'
 
-// app.use(cors()) // should need
 app.use(express.json())
+app.use(cors())
 app.use('/api/v1', getRoutes())
 
 app.listen(5000, () => {
