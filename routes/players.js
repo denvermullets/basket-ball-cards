@@ -15,8 +15,8 @@ function getPlayersRoutes() {
 
   router.get('/', getPlayers)
   router.post('/', postPlayers)
-  // router.get('/:id', getPlayer)
-  router.get('/:name', getPlayer)
+  router.get('/image/:name', getPlayerImage)
+  router.get('/:id', getPlayer)
   router.delete('/:id', deletePlayer)
 
   return router
@@ -32,7 +32,7 @@ async function getPlayers(req, res) {
   }
 }
 
-async function getPlayer(req, res) {
+async function getPlayerImage(req, res) {
   const { name } = req.params
   try {
     let url = s3.getSignedUrl('getObject', {
@@ -41,10 +41,42 @@ async function getPlayer(req, res) {
       Expires: 3600,
     })
 
-    console.log('image found: ', url)
+    console.log(`image found for: ${name}`)
     res.json(url)
   } catch (err) {
     console.log({ message: err.message })
+    res.status(500).json({ message: err.message })
+  }
+}
+
+async function getPlayer(req, res) {
+  const { id } = req.params
+  try {
+    const player = await pool.query(
+      'SELECT * FROM players WHERE player_id = $1',
+      [id]
+    )
+
+    let foundPlayer = player.rows[0]
+    let fixedName = foundPlayer.player_name
+      .replace(/[-.]/g, '')
+      .replace(/\s+/g, '-')
+      .toLowerCase()
+
+    // finds temp s3 image url and adds to object to return to GET
+    try {
+      let url = s3.getSignedUrl('getObject', {
+        Bucket: 'basketball-cards',
+        Key: fixedName + '.jpg',
+        Expires: 3600,
+      })
+      foundPlayer.image_url = url
+    } catch (err) {
+      console.log({ message: err.message })
+    }
+    console.log(`SELECT * FROM players WHERE player_id = $1, [${id}]`)
+    res.json(foundPlayer)
+  } catch (err) {
     res.status(500).json({ message: err.message })
   }
 }
