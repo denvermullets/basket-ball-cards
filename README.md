@@ -1,6 +1,6 @@
 ### Basket-ball.cards
 
-Just a simple basketball card game. This is the NodeJs api for the game. It uses an AWS S3 bucket to store the images. Pre-signed image url will be added to JSON output from the players GET request.
+Just a simple basketball card game. This is the NodeJs api for the game. It uses an AWS S3 bucket to store the images. Pre-signed image url will be added to JSON output from the players GET request. I wrote a rough Ruby scraper to grab all the stats of the players we have cards for and I use that to populate my DB when I determine which squad won.
 
 [React Front-end available here](https://github.com/denvermullets/basketball-cards-front)
 
