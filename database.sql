@@ -2,6 +2,7 @@ CREATE DATABASE bball_cards;
 
 -- \c into bball_cards database
 -- \d to display tables
+-- \dt to display tables explicit
 -- \d tablename to view structure
 
 CREATE TABLE players(
