@@ -4,7 +4,10 @@
   "description": "basketball card game",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node server.js",
+    "build-babel": "babel -d ./build ./src -s",
+    "clean": "rm -rf build && mkdir build",
+    "build": "npm run clean && npm run build-babel",
+    "start": "npm run build && node ./build/index.js",
     "start:dev": "nodemon --exec babel-node server.js"
   },
   "author": "denvermullets",
